@@ -49,6 +49,8 @@ try {
         if ( false === $tgt ) {
             $cnt++;
             continue;
+        } else {
+            break;
         }
         $cnt++;
     }
@@ -58,29 +60,4 @@ try {
         __FUNCTION__.'()'.$e->getMessage()
     );
 }
-
-#/**
-# * @fn    execTarget
-# * @brief execute target
-# */
-#function execTarget( $tgt ) {
-#    try {
-#        $mhd = $_SERVER['REQUEST_METHOD'];
-#        if ( 0 === strcmp( 'GET', $mtd ) ) {
-#            $tgt->get();
-#        } else if ( 0 === strcmp( 'POST', $mtd ) ) {
-#            $tgt->post();
-#        } else if ( 0 === strcmp( 'PUT', $mtd ) ) {
-#            $tgt->put();
-#        } else if ( 0 === strcmp( 'DELETE', $mtd ) ) {
-#            $tgt->delete();
-#        }
-#    } catch ( Exception $e ) {
-#        throw new Exception(
-#            PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
-#            __FUNCTION__.'()'.$e->getMessage()
-#        );
-#    }
-#}
-
 /* end of file */

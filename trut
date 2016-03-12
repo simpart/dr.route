@@ -1,2 +1,0 @@
-#!/bin/sh
-php /var/www/html/trut/src/php/cmd/Scmd_ctrl.php $*;
