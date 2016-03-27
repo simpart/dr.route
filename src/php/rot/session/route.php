@@ -31,9 +31,7 @@ namespace session;
 
 /*** global ***/
 $GsesTbl = array(
-    'login' => array('state' =>'login',),
-    'loggedin' => array('state' =>'loggedin',),
-    'common' => array('state' => array('login','loggedin',),),
+    'first' => array('state' =>'first',),
     '__any__' => null,
 );
 

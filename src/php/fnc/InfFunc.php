@@ -1,14 +1,14 @@
 <?php
 /**
- * @file   Ifnc_exec.php
+ * @file   InfFunc.php
  * @brief  execute interface class
  * @author simpart
  * @note   MIT License
  */
 namespace fnc;
 
-interface Ifnc_exec {
-  public function exec();
+interface InfFunc {
+    public function exec();
 }
 
 /* end of file */

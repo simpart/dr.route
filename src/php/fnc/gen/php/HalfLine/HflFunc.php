@@ -1,62 +1,70 @@
 <?php
 /**
- * @file   Sgen_func.php
- * @brief  generate function
+ * @file   HflFunc.php
+ * @brief  half line function
  * @author simpart
  * @note   MIT License
  */
-namespace fnc\gen;
+namespace fnc\gen\php\HalfLine;
 
 /*** function ***/
-/**
- * @fn     preCheck
- * @brief  get route controller object 
- * @param  (Cgenerate) generator object
- */
-function preCheck( $fnc ) {
-  try {
-      if( false === is_writable( $fnc->getOutput() ) ) {
-          throw new \err\CcomErr( 'output directory is not writable' );
-      }
-  } catch ( Exception $e ) {
-      throw $e;
-  }
-}
-
 /**
  * @fn    rotCtrl
  * @brief generate routing controller
  */
 function rotCtrl( $fnc ) {
     try {
+        $cnf_obj = $fnc->getCnfObj();
         /* routing */
-        $ret = copy(
-                   dirname(__FILE__).'/tmpl/route.php',
-                   $fnc->getOutput().'route.php'
+        $rot = file_get_contents(
+                   __DIR__ . DIRECTORY_SEPARATOR . 
+                   'tmpl'  . DIRECTORY_SEPARATOR . 
+                   'route.php'
                );
+        if ( false === $rot ) { 
+            throw new \err\CcomErr( 'failed read route.php file' );
+        }
+        $rot_code = str_replace('@gen1', $cnf_obj->getGroup('__any__'), $rot );
+        $ret = file_put_contents( $fnc->getOutput().'route.php', $rot_code );
         if ( false === $ret ) {
             throw new \err\CcomErr( 'failed create route.php file' );
         }
-        
+        /* common */
+        $ret = copy(
+                   __DIR__ . DIRECTORY_SEPARATOR .
+                   'tmpl'  . DIRECTORY_SEPARATOR .
+                   'common.php'
+                   ,
+                   $fnc->getOutput().'common.php'
+               );
+        if ( false === $ret ) {
+            throw new \err\CcomErr( 'failed create common.php file' );
+        } 
         /* session */
         $ret = mkdir( $fnc->getOutput().'session' );
         if ( false === $ret ) {
             throw new \err\CcomErr( 'failed create session directory' );
         }
         $ret = copy(
-                   dirname(__FILE__).'/tmpl/session/crud.php',
-                   $fnc->getOutput().'session/crud.php'
+                   __DIR__   . DIRECTORY_SEPARATOR .
+                   'tmpl'    . DIRECTORY_SEPARATOR .
+                   'session' . DIRECTORY_SEPARATOR . 
+                   'crud.php'
+                   ,
+                   $fnc->getOutput() . 'session' . DIRECTORY_SEPARATOR . 'crud.php'
                );
         if ( false === $ret ) {
             throw new \err\CcomErr( 'failed create crud.php file' );
         }
         $ses_rot = file_get_contents ( 
-                       dirname(__FILE__).'/tmpl/session/route.php'
+                       __DIR__  . DIRECTORY_SEPARATOR . 
+                      'tmpl'    . DIRECTORY_SEPARATOR . 
+                      'session' . DIRECTORY_SEPARATOR . 
+                      'route.php'
                    );
         if ( false === $ses_rot ) {
-            throw new \err\CcomErr( 'failed create session/route.php file' );
+            throw new \err\CcomErr( 'failed create session'.DIRECTORY_SEPARATOR.'route.php file' );
         }
-        $cnf_obj = $fnc->getCnfObj();
         $grp     = null;
         $ses_lst = array();
         while ( null !== ( $grp = $cnf_obj->getNextGrp() ) ) {
@@ -65,9 +73,12 @@ function rotCtrl( $fnc ) {
         $ses_tbl      = getArrayCode( $ses_lst );
         $rep1         = '$GsesTbl = '.$ses_tbl;
         $ses_rot_code = str_replace( '@rep1', $rep1, $ses_rot );
-        $ret = file_put_contents( $fnc->getOutput().'session/route.php', $ses_rot_code );
+        $ret          = file_put_contents( 
+                            $fnc->getOutput().'session'.DIRECTORY_SEPARATOR.'route.php',
+                            $ses_rot_code
+                        );
         if ( false === $ret ) {
-            throw new \err\CcomErr( 'failed create session\route.php file' );
+            throw new \err\CcomErr( 'failed create session'.DIRECTORY_SEPARATOR.'route.php file' );
         }
     } catch ( Exception $e ) {
         throw $e;
@@ -109,32 +120,6 @@ function rotGrp( $grp, $out, $cnf ) {
         // return objct
         
     } catch ( Exception $e ) {
-        throw new Exception(
-            PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
-            __FUNCTION__.'()'.$e->getMessage()
-        );
-    }
-}
-
-function anyGrp( $out, $cnf ) {
-    try {
-        $ret = mkdir( $out.'__any__' );
-        if ( false === $ret ) {
-            throw new \err\CcomErr( 'failed create '.$grp.' directory' );
-        }
-        $any_ctl = file_get_contents (
-                       dirname(__FILE__).'/tmpl/group/SanyCtrl.php'
-                   );
-        if ( false === $any_ctl ) {
-            throw new \err\CcomErr( 'failed create __any__/SgrpCtrl.php file' );
-        }
-        $any_conts    = $cnf->getUrimap( '__any__' );
-        $any_ctl_code = str_replace( '@gen1', $any_conts['__any__'], $any_ctl );
-        $ret = file_put_contents( $out.'__any__/SgrpCtrl.php', $any_ctl_code );
-        if ( false === $ret ) {
-            throw new \err\CcomErr( 'failed create '.$grp.'/SgrpCtrl.php file' );
-        }
-    } catch (Exception $e) {
         throw new Exception(
             PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
             __FUNCTION__.'()'.$e->getMessage()

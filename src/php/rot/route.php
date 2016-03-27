@@ -30,8 +30,9 @@
 namespace route;
 
 /*** require ***/
-require_once( dirname(__FILE__).'/session/crud.php' );
-require_once( dirname(__FILE__).'/session/route.php' );
+require_once( __DIR__.'/session/crud.php' );
+require_once( __DIR__.'/session/route.php' );
+require_once( __DIR__.'/common.php' );
 
 try {
     $cnt = 0;
@@ -40,47 +41,22 @@ try {
         $grp = \session\getMatchGrp( $cnt );
         if( null === $grp ) {
             /* not match any group */
-            return;
+            break;
         }
         /* url routing */
         require_once( dirname(__FILE__).'/'.$grp.'/SgrpCtrl.php' );
         $execTgt = '\\'.$grp.'\\'.'execTgt';
         $tgt = $execTgt( $_SERVER['REQUEST_URI'] );
-        if ( false === $tgt ) {
-            $cnt++;
-            continue;
+        if ( true === $tgt ) {
+            return;
         }
         $cnt++;
     }
+    require_once('/var/www/html/trut/src/php/any/CanyCtrl.php');
 } catch ( \Exception $e ) {
     throw new \Exception(
         PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
         __FUNCTION__.'()'.$e->getMessage()
     );
 }
-
-#/**
-# * @fn    execTarget
-# * @brief execute target
-# */
-#function execTarget( $tgt ) {
-#    try {
-#        $mhd = $_SERVER['REQUEST_METHOD'];
-#        if ( 0 === strcmp( 'GET', $mtd ) ) {
-#            $tgt->get();
-#        } else if ( 0 === strcmp( 'POST', $mtd ) ) {
-#            $tgt->post();
-#        } else if ( 0 === strcmp( 'PUT', $mtd ) ) {
-#            $tgt->put();
-#        } else if ( 0 === strcmp( 'DELETE', $mtd ) ) {
-#            $tgt->delete();
-#        }
-#    } catch ( Exception $e ) {
-#        throw new Exception(
-#            PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
-#            __FUNCTION__.'()'.$e->getMessage()
-#        );
-#    }
-#}
-
 /* end of file */

@@ -54,7 +54,7 @@ try {
 function genShell() {
     try {
         $conts  = '#!/bin/sh'.PHP_EOL;
-        $conts .= 'php '.__DIR__.'/../../../src/php/cmd/Scmd_ctrl.php $*';
+        $conts .= 'php '.__DIR__.'/../../../src/php/cmd/ctrl.php $*';
         $ret = file_put_contents( __DIR__.'/../../../trut', $conts );
         if(false === $ret) {
             return false;
