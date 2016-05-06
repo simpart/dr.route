@@ -1,0 +1,8 @@
+Usage:
+  trut <sub> | [opt]
+  <sub> : sub command
+    gen : generate routing
+    mod : module manager
+  [opt] : option
+    -v  : version
+    -h  : help

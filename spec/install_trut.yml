@@ -1,0 +1,70 @@
+- desc: install by (trut source root directory)/tool/install.sh                  #
+  next:                                                                          #
+  - desc: help about install.sh                                                  # #
+    next:                                                                        # #
+    - desc: display help of install.sh, if specified '-h' option                 # #
+    - desc: help contents are shown in the following $install_help               # #
+  - desc: error function                                                         #
+    next:                                                                        #
+    - desc: two or more of the parameter                                         # #
+      next:                                                                      # #
+      - desc: summary -> "failed install trut command"                           # #
+      - desc: support -> "please check \"install -h\" responce"                  # #
+    - desc: other error catch                                                    #
+      next:                                                                      #
+      - desc: summary -> "unknown"                                               # #
+      - desc: support -> "-"                                                     # #
+                                                                                 #
+- desc: install directory can be selected                                        #
+  next:                                                                          #
+  - desc: get install directory from install.sh argument                         #
+  - desc: directory is not required                                              # #
+  - desc: default directory is /usr/local/bin                                    # #
+  - desc: error function                                                         #
+    next:                                                                        #
+    - desc: permit only absolute path                                            #
+      next:                                                                      #
+      - desc: summary -> destination is relative path                            # #
+      - desc: support -> please specify absolute path                            # #
+    - desc: install directory is not exists                                      #
+      next:                                                                      #
+      - desc: summary -> "failed install trut command"                           # #
+      - desc: support -> "please check \"install -h\" responce"                  # #  
+                                                                                 #
+- desc: create trut shell script                                                 #
+  next:                                                                          #
+  - desc: contents of trut shell                                                 #
+    next:                                                                        #
+    - desc: call 'cmd' function with parameter                                   # #
+  - desc: create trut shell at trut directory                                    # #
+  - desc: write trut shell contents                                              #
+  - desc: permition of trut shell is 755                                         # #
+  - desc: error function                                                         #
+    next:                                                                        #
+    - desc: cannot create trut by permition                                      #
+      next:                                                                      #
+      - desc: summary -> "failed install trut command"                           # #
+      - desc: support -> "please check permition at (trut directory)/trut"       # #
+    - desc: already exists trut file                                             #
+      next:                                                                      #
+      - desc: summary -> "failed install trut command"                           #
+      - desc: support -> "please delete (trut directory)/trut"                   #
+                                                                                 #             
+- desc: enable trut command                                                      #
+  next:                                                                          #
+  - desc: create symbolic link trut shell to installation directory              # #
+  - desc: error function                                                         #
+    next:                                                                        #
+    - desc: symbolic link is already exists                                      #
+      next:                                                                      #
+      - desc: summary -> "failed install trut command"                           # #
+      - desc: support -> "please delete (install directory)/trut"                # #
+    - desc: cannot create trut by permition                                      #
+      next:                                                                      #
+      - desc: summary -> "failed install trut command"                           # #
+      - desc: support -> "please check permition at (install directory)"         # #
+
+
+
+
+

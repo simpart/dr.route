@@ -1,0 +1,53 @@
+- desc: generate routing file                    #
+  next:                                          #
+  - desc: generate by command line interface     
+    next:                                        
+    - desc: install trut command                 #
+      next: $install_trut                        #
+    - desc: about 'trut' command                 
+      next: $trut_cmd                            
+    - desc: generate by 'gen' sub command
+      next: $trutgen_oper
+  - desc: generate by web interface
+    next: $webif
+
+- desc: management generate algorithms
+  next:
+  - desc: select algorithm module
+    next: 
+    - spec: specify module name that is already installed
+    - desc: change selected module 
+      next:
+      - spec: edit module config from (trut dir)/conf/module.yml
+      - spec: switching 'select' value(true) from module config
+    - desc: nothing to do if already selected module
+      next:
+      - desc: check for the module config from (trut dir)/conf/module.yml
+      - desc: check for the module name(*chkmod) 'select' value is 'true'
+      - desc: it is already selected if chkmod and specified module name is same 
+  - desc: add algorithm module
+    next:
+    - desc: check specified directory
+      next:
+      - spec: check existing conf directory
+      - spec: check existing file directory
+      - spec: check existing src directory
+      - spec: check existing conf/desc.yml file
+    - desc: create module directory
+      next:
+      - desc: directory name from (module dir)/conf/desc.yml
+    - desc: copy directory contents
+    - desc: error function
+      next: 
+      - spec: target module is already installed
+    - desc: add module name to module config file
+  - desc: delete algorithm module
+  - desc: check algorithm module list
+  - desc: check detail of algorithm module
+  - desc: management by command
+    next: $trutmod_cmd
+  - desc: management by web insterface
+    next: $trutmod_web
+
+- desc: visualization generate config
+  next: $visible

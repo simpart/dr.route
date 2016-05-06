@@ -1,7 +1,0 @@
-first : 
-  session : 
-    state : first
-  urlmap : 
-    /trut/ : /var/www/html/trut/html/lgn/init.html
-
-__any__ : /var/www/html/trut/src/php/any/CanyCtrl.php

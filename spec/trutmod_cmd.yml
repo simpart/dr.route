@@ -1,0 +1,40 @@
+- desc: trut mod parameter                                   # #
+  next:                                                      # #
+  - desc: 'sel' function
+    next:
+    - desc: require module name
+    
+  - desc: 'add' function                                     # #
+    next:
+    - desc: require source directory                           # #
+    - desc: error function                                     # #
+      next:                                                    # #
+      - desc: comerr : could not find directory                # #
+  - desc: 'del' function                                     # #
+    next:                                                    # #
+    - desc: require module name                              # #
+    - desc: error function                                   # #
+      next:                                                  # #
+      - desc: comerr : invalid module name                   #
+  - desc: 'list' function                                    # #
+    next:                                                    # #
+    - desc: no argument                                      # #
+  - desc: 'show' function
+    next:
+    - desc: require module name
+    - desc: error function                                   # #
+      next:                                                  # #
+      - desc: comerr : invalid module name                   #
+      
+- desc: trut mod option                                      # #
+  next:                                                      # #
+  - desc: '-h' option                                        # #
+    next:                                                    # #
+    - desc: show help of 'trut mod'                          # #
+    - desc: help contents is $trutmod_help                   # #
+    - desc: this option is not required                      # #
+
+- desc: common error function                                # #
+  next:                                                      # #
+  - desc: too few arguments                                  # #
+  - desc: too many arguments                                 # #

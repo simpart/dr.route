@@ -30,9 +30,13 @@
 namespace route;
 
 /*** require ***/
-require_once( __DIR__.'/session/crud.php' );
-require_once( __DIR__.'/session/route.php' );
-require_once( __DIR__.'/common.php' );
+require_once( __DIR__   . DIRECTORY_SEPARATOR .
+              'session' . DIRECTORY_SEPARATOR .
+              'crud.php' );
+require_once( __DIR__   . DIRECTORY_SEPARATOR .
+              'session' . DIRECTORY_SEPARATOR . 
+              'route.php' );
+require_once( __DIR__ . DIRECTORY_SEPARATOR . 'common.php' );
 
 try {
     $cnt = 0;
@@ -44,10 +48,14 @@ try {
             break;
         }
         /* url routing */
-        require_once( dirname(__FILE__).'/'.$grp.'/SgrpCtrl.php' );
+        require_once( 
+            __DIR__ . DIRECTORY_SEPARATOR .
+            $grp    . DIRECTORY_SEPARATOR .
+            'SgrpCtrl.php'
+        );
         $execTgt = '\\'.$grp.'\\'.'execTgt';
-        $tgt = $execTgt( $_SERVER['REQUEST_URI'] );
-        if ( true === $tgt ) {
+        $uri     = getNoprmUri( $_SERVER['REQUEST_URI'] );
+        if (true === $execTgt( $uri )) {
             return;
         }
         $cnt++;
@@ -55,7 +63,7 @@ try {
     require_once('/var/www/html/trut/src/php/any/CanyCtrl.php');
 } catch ( \Exception $e ) {
     throw new \Exception(
-        PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
+        PHP_EOL.'ERR(File:'.basename(__FILE__).',Line:'.__line__.'):'.
         __FUNCTION__.'()'.$e->getMessage()
     );
 }

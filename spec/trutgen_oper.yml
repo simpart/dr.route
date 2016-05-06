@@ -1,0 +1,10 @@
+- desc: check output directory                                #
+  next:                                                       #
+  - desc: show [y|n] confirm if output directory is not empty #
+- desc: load generate algorithms                              #
+  next:                                                       #
+  - desc: load config from (trut directory)/conf/module.yml   #
+  - desc: syntax of module.yml                                #
+    next: conf_mod_synx.yml                                   #
+  - desc: get module name that 'select' value is true         #
+- desc: call module function                                  #

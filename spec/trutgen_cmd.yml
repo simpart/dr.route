@@ -1,0 +1,21 @@
+- desc: trut gen parameter                                     # #
+  next:                                                        # #
+  - desc: path to config file                                  # #
+  - desc: first argument (path) is required                    # #
+  - desc: output directory                                     # #
+  - desc: directory is required if "-o" is specified           # #
+  - desc: deafult output directory is current                  # #
+- desc: trut gen option                                        # #
+  next:                                                        # #
+  - desc: '-o' option                                          # #
+  - desc: '-h' option                                          # #
+    next:                                                      # #
+    - desc: show help of 'trut gen'                            # #
+    - desc: help contents is $trutgen_help                     # #
+- desc: error function                                         # #
+  next:                                                        # #
+  - desc: could not find path to config file                   # #
+  - desc: could not find output directory                      # #
+  - desc: could not writeble output directory                  # #
+  - desc: invalid option                                       # #
+  - desc: too few arguments                                    # #

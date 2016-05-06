@@ -54,9 +54,36 @@ function setContsType( $type ) {
         }
     } catch ( \Exception $e )  {
         throw new \Exception(
-            PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
+            PHP_EOL.'ERR(File:'.basename(__FILE__).',Line:'.__line__.'):'.
             __FUNCTION__.'()'.$e->getMessage()
         );
+    }
+}
+
+/**
+ * get uri without GET param
+ * 
+ * @param $url : (string) uri
+ * @return (string) url without GET param
+ */
+function getNoprmUri( $uri ) {
+    try {
+        $ret_val = '';
+        $uexp    = explode( '/' , $uri );
+        for ( $loop=0 ; $loop < count($uexp) ; $loop++ ) {
+            if( $loop == count($uexp)-1 ) {
+                $gexp     = explode( '?' , $uexp[$loop] );
+                $ret_val .= $gexp[0];
+            } else {
+                $ret_val .= $uexp[$loop] . '/';
+            }
+        }
+        return $ret_val;
+    } catch( Exception $e ) {
+        throw new Exception( 
+                      PHP_EOL.'ERR(File:'.basename(__FILE__).',Line:'.__line__.'):'.
+                      __FUNCTION__.'()'.$e->getMessage()
+                  );
     }
 }
 /* end of file */

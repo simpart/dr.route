@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="./src/js/jquery"></script>
+    <script type="text/javascript" src="./src/js/loader"></script>
+    <script type="text/javascript" src="./src/js/editstart"></script>
+  </head>
+  <script>
+    $(function(){
+      try {
+        Fcom_fireLoadev( [DINI_LOAD_CNT,"DITM_LOAD_EDTUIL"] ,
+          function(){
+            try {
+              var id = <?php
+                         if( true === isset($argv[1]) ) {
+                           echo $argv[1];
+                         } else {
+                           echo "null";
+                         } 
+                       ?>;
+              if( null == id ) {
+                return;
+              }
+              Fitm_setItmConts( id );
+            } catch( e ) {
+              alert( e.stack );
+            }
+          }
+        );
+      } catch(e) {
+        alert(e.stack);
+      }
+    });
+  </script>
+  <body style="display:none;">
+    <div id="i-hdr">
+    </div>
+    <div style="float:none;height:70px;"></div>
+    <div id="i-cnt">
+    </div>
+  </body>
+</html>
+

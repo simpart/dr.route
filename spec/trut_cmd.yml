@@ -1,0 +1,31 @@
+- desc: trut command option                                        # #
+  next:                                                            # #
+  - desc: '-h' option                                              # #
+    next:                                                          # #
+    - desc: show help of 'trut'                                    # #
+    - desc: help contents is $trut_help                            # #
+    - desc: this option is not required                            # #
+  - desc: '-v' option                                              # #
+    next:                                                          # #
+    - desc: show trut version                                      # #
+    - desc: contents is $trut_ver                                  # #
+    - desc: this option is not required                            # #
+  - desc: error function                                           # #
+    next:                                                          # #
+    - desc: invalid sub command                                    # #
+    - desc: too few arguments                                      # #
+                                                                   # #
+- desc: trut sub command                                           # #
+  next:                                                            # #
+  - desc: 'gen' sub command                                        # #
+    next:                                                          # #
+    - desc: command specifications
+      next: $trutgen_cmd
+    - desc: operating specifications
+      next: $trutgen_oper
+  - desc: 'mod' sub command                                        # #
+    next:
+    - desc: command specifications
+      next: $trutmod_cmd
+    - desc: operating specifications
+      next: $trutmod_oper

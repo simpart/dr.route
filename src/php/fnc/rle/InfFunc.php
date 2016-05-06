@@ -5,10 +5,10 @@
  * @author simpart
  * @note   MIT License
  */
-namespace fnc\gen;
+namespace fnc\rle;
 
-interface InfGen {
-    public function generate();
+interface InfFunc {
+    public function exec();
 }
 
 /* end of file */

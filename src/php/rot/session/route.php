@@ -75,7 +75,9 @@ function getMatchGrp( $cc ) {
                 break;
             }
         }
-        
+        if (0 === strcmp($ret_val, '__any__')) {
+            return null;
+        }
         return $ret_val;
     } catch ( \Exception $e ) {
         throw new \Exception (

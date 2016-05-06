@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /trut/
+RewriteRule (.*)$ /var/www/html/trut/src/php/rot/route.php [L]
+# ^/$   ^(.+)$

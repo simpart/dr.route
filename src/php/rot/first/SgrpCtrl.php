@@ -52,8 +52,9 @@ function execTgt( $uri ) {
         foreach ( $Gfirst_uriTbl as $key => $val ) {
             if ( 0 === strcmp( $uri, $key ) ) {
                 $get_type = explode( '.', $val );
-                setContsType( $get_type[ count($get_type)-1 ] );
+                \route\setContsType( $get_type[ count($get_type)-1 ] );
                 if ( 0 === strcmp( $get_type[ count($get_type)-1 ], 'php' ) ) {
+                    header("Content-Type: application/json; charset=utf-8");
                     require_once( $val );
                 } else {
                     $ret = file_get_contents( $val );

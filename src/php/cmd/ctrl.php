@@ -11,7 +11,7 @@ namespace cmd;
 require_once( dirname(__FILE__).'/check.php' );
 
 try {
-    /* check cmd parameter */
+    /* get parameter without this file name */
     $prm = array();
     $loop = 0;
     for( $loop=1; $loop < count($argv); $loop++ ) {
@@ -24,10 +24,11 @@ try {
     }
     /* execute function */
     $func->exec();
-} catch ( Exception $e ) {
-    throw new Exception(
-                  PHP_EOL.'ERR(File:'.basename(__FILE__).','.
-                  'Line:'.__line__.'):'.$e->getMessage()
-              );
+} catch ( \err\ComErr $se ) {
+    $se->showConts();
+    return;
+} catch ( \Exception $e ) {
+    $err = new \err\ComErr('unknown','-');
+    $err->showConts();
 }
 /* end of file */

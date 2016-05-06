@@ -5,67 +5,48 @@
  * @author simpart
  */
 
-/*** define ***/
-define('INSTALLDIR', '/usr/local/bin');
+namespace ini;
+
+/*** require ***/
+require_once(__DIR__ . '/../com/loader/class.php');
+require_once(__DIR__ . '/param.php');
+require_once(__DIR__ . '/genShell.php');
 
 try {
-    /* generate trut shell */
-    if (false === is_writable(__DIR__.'/../../../')) {
-        echo 'could not write \''.__DIR__.'/../../../'.'\''.PHP_EOL;
+    $prm = getParam($argv);
+    if (0 === strcmp('-h', $prm)) {
+        /* display help of install.sh, if specified '-h' option */
+        showHelp();
         return;
     }
-    if (true === file_exists (__DIR__.'/../../../trut')) {
-        echo 'already exists \''.__DIR__.'/../../../trut\''.PHP_EOL;
-        return;
-    }
-    if (false === genShell()) {
-        echo 'could not create \''.__DIR__.'/../../../trut'.'\''.PHP_EOL;
-        return;
-    }
-    if (false === chmod(__DIR__.'/../../../trut', 755)) {
-        echo 'could not change mode '.__DIR__.'/../../../trut'.PHP_EOL;
-        return;
-    }
+    /* check directory */
+    chkDir($prm);
     
-    /* create symbolic link */
-    if (false === is_writable(INSTALLDIR)) {
-        echo 'could not write \''.INSTALLDIR.'\''.PHP_EOL;
-        return;
-    }
-    if (true === file_exists (INSTALLDIR.'/trut')) {
-        echo 'already exists '.INSTALLDIR.'/trut'.PHP_EOL;
-        return;
-    }
-    $lncmd = 'ln -s '.__DIR__.'/../../../trut '.INSTALLDIR.'/trut';
-    echo $lncmd.PHP_EOL;
-    if (false === system($lncmd)) {
-        echo 'could not create link \''.INSTALLDIR.'/trut\''.PHP_EOL;
-        return;
-    }
+    /* create trut shell script */
+    genShell();
     
-    echo 'install trut '.PHP_EOL;
-} catch (Exception $e) {
-    throw new Exception(
-        PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
-        __FUNCTION__.'()'.$e->getMessage()
-    );
+    setSymLink($prm);
+    
+    echo 'successful install trut'.PHP_EOL;
+} catch (\err\ComErr $ce) {
+    $ce->showConts();
+} catch (\Exception $e) {
+    $err = new \err\ComErr(
+               /* summary -> "unknown" */
+               'unknown',
+               /* support -> "-" */
+               '-'
+           );
+    $err->showConts();
 }
 
-function genShell() {
+function showHelp() {
     try {
-        $conts  = '#!/bin/sh'.PHP_EOL;
-        $conts .= 'php '.__DIR__.'/../../../src/php/cmd/ctrl.php $*';
-        $ret = file_put_contents( __DIR__.'/../../../trut', $conts );
-        if(false === $ret) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch(Exception $e) {
-        throw new Exception(
-            PHP_EOL.'ERR(File:'.basename(__FILE__).','.',Line:'.__line__.'):'.
-            __FUNCTION__.'()'.$e->getMessage()
-        );
+        echo 'Usage : install.sh [dir]'.PHP_EOL;
+        echo '        dir  Installation directory'.PHP_EOL;
+        echo '             default is /usr/local/bin'.PHP_EOL;
+    } catch (\Exception $e) {
+        throw $e;
     }
 }
 
